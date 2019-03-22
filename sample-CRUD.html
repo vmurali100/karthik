@@ -1,90 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
-    <div class="container">
-            <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                        <th>Phone</th>
-                        <th>Website</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody id="myTable">
-                      
-                    </tbody>
-                  </table>
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                    <th>Phone</th>
+                    <th>Website</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                          <label for="fname">First Name</label>
+                          <input type="text" class="form-control" id="fname" placeholder="FIrst Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="lname">Last Name</label>
+                          <input type="text" class="form-control" id="lname" placeholder="Last Name">
+                        </div>
+                        
+                      </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info" onclick="update()">Update</button>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="close">Close</button>
+                </div>
+
+            </div>
+        </div>
     </div>
     <script>
-        var data ;
+        var data;
 
         var getInfo = new XMLHttpRequest;
-        getInfo.onreadystatechange=function (){
-            if(getInfo.readyState == 4 && getInfo.status == 200){
+        getInfo.onreadystatechange = function () {
+            if (getInfo.readyState == 4 && getInfo.status == 200) {
                 data = JSON.parse(getInfo.response);
                 display(data)
             }
         }
-        getInfo.open("GET","https://jsonplaceholder.typicode.com/users");
+        getInfo.open("GET", "https://jsonplaceholder.typicode.com/users");
         getInfo.send()
 
         console.log(getInfo)
-        function display(data){
+        function display(data) {
             document.getElementById("myTable").innerHTML = "";
-            for (a in data){
+            for (a in data) {
                 var tr = document.createElement("tr");
-                for(b in data[a]){
-                    if(b != "address" && b != "company"){
+                // tr.setAttribute("onclick","showModal("+a+")")
+                for (b in data[a]) {
+                    if (b != "address" && b != "company") {
                         var td = document.createElement("td")
-                        td.innerHTML= data[a][b]// 
+                        td.innerHTML = data[a][b]// 
                         tr.appendChild(td)
                     }
-                   
+
                 }
 
                 // editButton
                 var editTd = document.createElement("td");
                 var editBtn = document.createElement("button")
-                editBtn.innerHTML="Edit";
-                editBtn.setAttribute("class","btn btn-info");
-                editBtn.setAttribute("onclick","editUser("+a+")")
+                editBtn.innerHTML = "Edit";
+                editBtn.setAttribute("class", "btn btn-info");
+                editBtn.setAttribute("onclick", "editUser(" + a + ")")
                 editTd.appendChild(editBtn)
                 // DeleteTd
-                var deleteTd= document.createElement("td")
+                var deleteTd = document.createElement("td")
                 var deleteBtn = document.createElement("button");
-                deleteBtn.innerHTML="Delete";
-                deleteBtn.setAttribute("class","btn btn-danger")
-                deleteBtn.setAttribute("onclick","deleteUser("+a+")")
+                deleteBtn.innerHTML = "Delete";
+                deleteBtn.setAttribute("class", "btn btn-danger")
+                deleteBtn.setAttribute("onclick", "deleteUser(" + a + ")")
 
                 deleteTd.appendChild(deleteBtn);
 
+                var AddressTd = document.createElement("td");
+                var AddressBtn = document.createElement("button")
+                AddressBtn.innerHTML = "Address";
+                AddressBtn.setAttribute("class", "btn btn-info");
+                AddressBtn.setAttribute("onclick", "AddressUser(" + a + ")")
+                AddressTd.appendChild(AddressBtn)
+
+                // Company Details Details
+                var companyTd = document.createElement("td");
+                var companyBtn = document.createElement("button")
+                companyBtn.innerHTML = "Company";
+                companyBtn.setAttribute("class", "btn btn-info");
+                companyBtn.setAttribute("onclick", "companyUser(" + a + ")")
+                companyTd.appendChild(companyBtn)
+
+                // Extra TD for Address & Company
+
+                var addComDiv = document.createElement("td");
+                addComDiv.setAttribute("class", "addComData");
+
                 tr.appendChild(editTd);
-                tr.appendChild(deleteTd)
+                tr.appendChild(deleteTd);
+                tr.appendChild(AddressTd);
+                tr.appendChild(companyTd);
+                tr.appendChild(addComDiv)
                 document.getElementById("myTable").appendChild(tr)
             }
         }
 
-        function editUser(i){
+        function editUser(i) {
             console.log(i)
         }
 
-        function deleteUser(i){
+        function deleteUser(i) {
             console.log(i)
-            data.splice(i,1);
+            data.splice(i, 1);
             display(data)
+        }
+
+        function AddressUser(i) {
+            document.getElementsByClassName("addComData")[i].innerHTML = data[i].address.city
+        }
+
+        function companyUser(i) {
+            document.getElementsByClassName("addComData")[i].innerHTML = data[i].company.name
+        }
+
+        function showModal(){
+            document.getElementById("myModal").style.display="block";           
+           
+        }
+
+        
+        document.getElementById('close').onclick = closeModal;
+
+        function closeModal(){
+            document.getElementById("myModal").style.display="none";
+        }
+        function update(){
+            closeModal()
         }
     </script>
 </body>
+
 </html>
