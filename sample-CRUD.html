@@ -87,6 +87,7 @@
                 for (b in data[a]) {
                     if (b != "address" && b != "company") {
                         var td = document.createElement("td")
+                        td.setAttribute("onclick","showModal("+a+")")
                         td.innerHTML = data[a][b]// 
                         tr.appendChild(td)
                     }
