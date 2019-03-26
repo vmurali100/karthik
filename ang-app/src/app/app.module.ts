@@ -8,6 +8,9 @@ import { Comp3Component } from './comp3/comp3.component';
 import { C2pComponent } from './c2p/c2p.component';
 import { ParentComponent } from './c2p/parent/parent.component';
 import { ChildComponent } from './c2p/child/child.component';
+import { SiblingsComponent } from './siblings/siblings.component';
+import { LeftComponent } from './siblings/left/left.component';
+import { RightComponent } from './siblings/right/right.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { ChildComponent } from './c2p/child/child.component';
     Comp3Component,
     C2pComponent,
     ParentComponent,
-    ChildComponent
+    ChildComponent,
+    SiblingsComponent,
+    LeftComponent,
+    RightComponent
   ],
   imports: [
     BrowserModule
