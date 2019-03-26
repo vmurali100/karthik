@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input} from '@angular/core';
 
 @Component({
   selector: 'app-comp2',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comp2.component.css']
 })
 export class Comp2Component implements OnInit {
-
-  constructor() { }
+  @Input() revceivable;
+  constructor() {
+    console.log("I am first triggering")
+   }
 
   ngOnInit() {
+    // console.log(this.revceivable);
+    console.log("I am Second Triggering")
   }
 
 }
