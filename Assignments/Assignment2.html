@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      div#side {
+        width: 250px;
+        float: left;
+      }
+      img#myImg {
+        float: left;
+        width: 250px;
+        height: 250px;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="myStates"></ul>
+    <div id="StateDetails">
+      <div id="side">
+        <p id="name"></p>
+        <p id="capital"></p>
+        <p id="population"></p>
+        <p id="localLanguage"></p>
+      </div>
+      <img src="" alt="" id="myImg" />
+    </div>
+    <script>
+      var states = [
+        {
+          name: "Andhra Pradesh",
+          capital: "Amaravathi",
+          localLanguage: "Telugu",
+          population: "5 Crores",
+          img:
+            "https://psc.ap.gov.in/(S(e0wckbumhtm4ob1mgzqwhtjw))/images/NewMap.jpg"
+        },
+        {
+          name: "Telangana",
+          capital: "Hyderabad",
+          localLanguage: "Telugu",
+          population: "5 Crores",
+          img: "http://telugu.v6news.tv/img/2016/11/New-telangana-map.jpg"
+        },
+        {
+          name: "Karnataka",
+          capital: "Bangalore",
+          localLanguage: "Kannada",
+          population: "5 Crores",
+          img:
+            "https://www.researchgate.net/profile/Dr_Debdutta_Bhattacharya/publication/279534616/figure/fig1/AS:614301349974016@1523472263034/Map-of-Karnataka-showing-tribal-population-as-percentage-of-total-population-in-each-of.png"
+        },
+        {
+          name: "Kerala",
+          capital: "Kochin",
+          localLanguage: "Malayalam",
+          population: "5 Crores",
+          img:
+            "https://psc.ap.gov.in/(S(e0wckbumhtm4ob1mgzqwhtjw))/images/NewMap.jpg"
+        }
+      ];
+
+      for (i = 0; i < states.length; i++) {
+        var li = document.createElement("li");
+        // li.setAttribute("onclick", "getStateInfo(" + i + ")");
+        li.innerHTML = states[i].name;
+        document.getElementById("myStates").appendChild(li);
+      }
+
+      //   function getStateInfo(i) {
+      //     console.log(states[i]);
+      //   for (a in states[i]) {
+      //     if (a != "img") {
+      //       document.getElementById(a).innerHTML = states[i][a];
+      //     } else {
+      //       document.getElementById("myImg").setAttribute("src", states[i][a]);
+      //     }
+      //   }
+      //   }
+      document.getElementById("myStates").onclick = function(event) {
+        console.log(event.target.innerHTML);
+        for (i = 0; i < states.length; i++) {
+          if (states[i].name == event.target.innerHTML) {
+            for (a in states[i]) {
+              if (a != "img") {
+                document.getElementById(a).innerHTML = states[i][a];
+              } else {
+                document
+                  .getElementById("myImg")
+                  .setAttribute("src", states[i][a]);
+              }
+            }
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
