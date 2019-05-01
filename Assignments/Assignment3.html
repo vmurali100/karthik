@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <button class="btn btn-danger" onclick="deleteFirst()">
+        Delete First
+      </button>
+      <button class="btn btn-danger" onclick="deleteLast()">
+        Delete Last
+      </button>
+      <button class="btn btn-danger" onclick="deleteOddEven('odd')">
+        Delete Odd
+      </button>
+      <button class="btn btn-danger" onclick="deleteOddEven('even')">
+        Delete Even
+      </button>
+      <button class="btn btn-danger" onclick="changeColor()">
+        Change Color
+      </button>
+      <hr />
+      <input type="number" name="" id="myIndex" />
+      <button class="btn btn-danger" onclick="deleteObj()">
+        Delete
+      </button>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody id="myTable"></tbody>
+      </table>
+    </div>
+    <script>
+      function displayInfo(data) {
+        console.log(data);
+        document.getElementById("myTable").innerHTML = "";
+        for (i = 0; i < data.length; i++) {
+          var tr = document.createElement("tr");
+          for (a in data[i]) {
+            if (a == "name" || a == "username" || a == "email" || a == "id") {
+              var td = document.createElement("td");
+              td.innerHTML = data[i][a];
+              tr.appendChild(td);
+            }
+          }
+          document.getElementById("myTable").appendChild(tr);
+        }
+      }
+      function displayData() {
+        var getData = new XMLHttpRequest();
+        getData.onreadystatechange = function() {
+          if (getData.readyState == 4 && getData.status == 200) {
+            console.log(typeof getData.response);
+            data = JSON.parse(getData.response);
+            displayInfo(data);
+          }
+        };
+        getData.open("GET", "https://jsonplaceholder.typicode.com/users");
+        getData.send();
+      }
+
+      function deleteFirst() {
+        data.shift();
+        displayInfo(data);
+      }
+      function deleteLast() {
+        data.pop();
+        displayInfo(data);
+      }
+
+      function deleteObj() {
+        var no = document.getElementById("myIndex").value;
+        data.splice(no, 1);
+        displayInfo(data);
+      }
+
+      function deleteOddEven(str) {
+        var newArray = [];
+        if (str == "odd") {
+          for (i = 0; i < data.length; i++) {
+            if (data[i].id % 2 == 1) {
+              data.splice(i, 1);
+            }
+          }
+          displayInfo(data);
+        } else {
+          for (i = 0; i < data.length; i++) {
+            if (data[i].id % 2 == 0) {
+              data.splice(i, 1);
+            }
+          }
+          displayInfo(data);
+        }
+
+        console.log(data);
+      }
+      function changeColor() {
+        var trs = document.getElementsByTagName("tr");
+
+        for (i = 0; i <= data.length; i++) {
+          if (i % 2 == 1) {
+            trs[i].style.background = "lightgrey";
+          } else {
+            trs[i].style.background = "grey";
+            trs[i].style.color = "white";
+          }
+        }
+      }
+      displayData();
+    </script>
+  </body>
+</html>
