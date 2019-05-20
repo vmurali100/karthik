@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Literal Method of Creating Object
+      var person = {
+        name: "VMK",
+        lname: "VM"
+      };
+
+      var myPerson = person;
+
+      function Person(fname, lname) {
+        this.fname = fname;
+        this.lname = lname;
+      }
+
+      Person.prototype.fullName = function() {
+        return this.fname + " " + this.lname;
+      };
+
+      Person.prototype.company = "Sunline It Solutions";
+      var person1 = new Person("Murali", "krishna");
+      var person2 = new Person("Karthik", "V");
+
+      console.log(person1);
+      console.log(person2);
+
+      function calulate() {
+        var a = 10;
+        for (i = 0; i < a; i++) {
+          console.log(i + "<br>");
+        }
+      }
+    </script>
+  </body>
+</html>
