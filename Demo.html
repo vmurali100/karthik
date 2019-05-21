@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody id="myTable"></tbody>
+      </table>
+    </div>
+    <script>
+      var getData = new XMLHttpRequest();
+      getData.onreadystatechange = function() {
+        if (getData.readyState == 4 && getData.status == 200) {
+          data = JSON.parse(getData.responseText);
+          console.log(data);
+          showData(data);
+        }
+      };
+      getData.open(
+        "GET",
+        "http://www.filltext.com/?rows=5&fname={firstName}&lname={lastName}&tel={phone|format}&address={streetAddress}&city={city}&state={usState|abbr}&zip={zip}&pretty=true"
+      );
+      getData.send();
+      function showData(data) {
+        document.getElementById("myTable").innerHTML = "";
+        for (i = 0; i < data.length; i++) {
+          var tr = document.createElement("tr");
+          for (a in data[i]) {
+            var td = document.createElement("td");
+            td.innerHTML = data[i][a];
+            tr.appendChild(td);
+          }
+          var deleteTd = document.createElement("td");
+          var delBtn = document.createElement("button");
+          delBtn.innerHTML = "Delete";
+          delBtn.setAttribute("class", "btn btn-danger");
+          delBtn.setAttribute("onclick", "deleteUser(" + i + ")");
+          deleteTd.appendChild(delBtn);
+          tr.appendChild(deleteTd);
+          document.getElementById("myTable").appendChild(tr);
+        }
+      }
+
+      function deleteUser(i) {
+        data.splice(i, 1);
+        showData(data);
+        console.log(data);
+      }
+    </script>
+  </body>
+</html>
