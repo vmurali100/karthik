@@ -5,7 +5,7 @@ export default class Comp1 extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { obj, arra };
+    this.state = { obj, arra, editUser: {} };
   }
 
   render() {
@@ -17,6 +17,7 @@ export default class Comp1 extends Component {
           arr={this.state.arra}
           edit={this.editUserInParent}
           del={this.deleteUserInParent}
+          editUserInfo={this.state.editUser}
         />
       </div>
     );
@@ -24,6 +25,7 @@ export default class Comp1 extends Component {
 
   editUserInParent = i => {
     console.log(this.state.arra[i]);
+    this.setState({ editUser: this.state.arra[i] });
   };
 
   deleteUserInParent = i => {
